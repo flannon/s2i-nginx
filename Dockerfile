@@ -19,8 +19,8 @@ RUN yum install -y epel-release && \
     yum install -y --setopt=tsflags=nodocs nginx && \
     yum clean all -y
 
-RUN sec -f 's/80/8080' /etc/nginx/nginx.conf
-RUN sed -1 's/user nginx;//' /etc/nginx.conf
+RUN sec -i 's/80/8080' /etc/nginx/nginx.conf
+RUN sed -i 's/user nginx;//' /etc/nginx.conf
 
 #(optional): Copy the builder files into /opt/app-root
 COPY ./s2i/bin /opt/app-root/
