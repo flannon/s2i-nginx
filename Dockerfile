@@ -1,5 +1,6 @@
 # centos/centos7
-FROM openshift/base-centos7
+#FROM openshift/base-centos7
+FROM centos:centos7 
 
 MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
 
