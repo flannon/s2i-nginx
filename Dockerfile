@@ -1,10 +1,8 @@
 # centos/centos7
 FROM openshift/base-centos7
 
-# TODO: Put the maintainer name in the image metadata
- MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
+MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
 
-TODO: Rename the builder environment variable to inform users about application you provide them
 ENV NGINX_VERSION=1.2.12
 
 # TODO: Set labels used in OpenShift to describe the builder image
