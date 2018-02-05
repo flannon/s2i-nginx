@@ -20,7 +20,7 @@ RUN yum install -y epel-release && \
     yum clean all -y
 
 RUN sed -i 's/80/8080' /etc/nginx/nginx.conf
-RUN sed -i 's/user nginx;//' /etc/nginx.conf
+RUN sed -i 's/user nginx\;//' /etc/nginx/nginx.conf
 
 #(optional): Copy the builder files into /opt/app-root
 COPY ./s2i/bin /opt/app-root/
