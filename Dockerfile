@@ -16,7 +16,7 @@ LABEL io.k8s.description="Platform for building nginx" \
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
 RUN yum install -y epel-release && \
-    yum install -y ==setopt=tsflags=nodocs nginx && \
+    yum install -y --setopt=tsflags=nodocs nginx && \
     yum clean all -y
 
 RUN sec -f 's/80/8080' /etc/nginx/nginx.conf
