@@ -11,8 +11,9 @@ ENV NGINX_VERSION=1.2.12
 LABEL io.k8s.description="Platform for building nginx" \
       io.k8s.display-name="nginx 1.2.12" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,webserver,html,nginx" 
+      io.openshift.tags="builder,webserver,html,nginx" \
       #io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
+      io.openshift.s2i.scripts-url="image://${HOME}/s2i/bin"
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
@@ -20,18 +21,30 @@ RUN yum install -y epel-release && \
     yum install -y --setopt=tsflags=nodocs nginx && \
     yum clean all -y
 
-RUN sed -i 's/80/8080/' /etc/nginx/nginx.conf
-RUN sed -i 's/user nginx;//' /etc/nginx/nginx.conf
+#RUN sed -i 's/80/8080/' /etc/nginx/nginx.conf
+#RUN sed -i 's/user nginx;//' /etc/nginx/nginx.conf
+
+ENV HOME=/opt/app-root
+
+RUN mkdir -p ${HOME} && \
+  useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/lologin \
+          -c "Default Application User" default
+
+ENV PORT=8080
 
 #(optional): Copy the builder files into /opt/app-root
-COPY ./s2i/bin /opt/app-root/
+COPY ./s2i/bin/ /opt/app-root/
+
+COPY nginx.conf ${HOME}/nginx.conf
+COPY nginx.server.sample.conf ${HOME}/nginx.server.sample.conf
 
 #Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
-COPY ./s2i/bin/ /usr/libexec/s2i
+#COPY ./s2i/bin/ /usr/libexec/s2i
 
 #Drop the root user and make the content of /opt/app-root owned by user 1001
-RUN chown -R 1001:1001 /opt/app-root
+RUN chown -R 1001:1001 /opt/app-root && \
+    find ${HOME} -type d -exec chmod g+ws {} \;
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001
@@ -41,4 +54,4 @@ EXPOSE 8080
 
 # Set the default CMD for the image
 #CMD ["/usr/libexec/s2i/usage"]
-CMD ["usage"]
+CMD ["/opt/app-root/run"]
