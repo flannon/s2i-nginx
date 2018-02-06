@@ -9,7 +9,7 @@ ENV NGINX_VERSION=1.2.12
 
 # Install required packages here:
 RUN yum install -y epel-release && \
-    PACKAGES="nginx"
+    PACKAGES="nginx" && \
     yum install -y --setopt=tsflags=nodocs ${PACKAGES} && \
     rpm -V ${PACKAGES} && \
     yum clean all -y
