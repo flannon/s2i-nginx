@@ -7,4 +7,8 @@
 #	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
 #
 
-exec /usr/sbin/nginx -g "daemon off;"
+#exec /usr/sbin/nginx -g "daemon off;"
+
+set -eo pipefail
+
+exec ${HOME}/run

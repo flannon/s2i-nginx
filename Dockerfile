@@ -1,5 +1,6 @@
 # centos/centos7
 #FROM openshift/base-centos7
+#FROM centos/s2i-base-centos7
 FROM centos:centos7 
 
 MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
@@ -10,8 +11,8 @@ ENV NGINX_VERSION=1.2.12
 LABEL io.k8s.description="Platform for building nginx" \
       io.k8s.display-name="nginx 1.2.12" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,webserver,html,nginx" \
-      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
+      io.openshift.tags="builder,webserver,html,nginx" 
+      #io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
@@ -39,4 +40,5 @@ USER 1001
 EXPOSE 8080
 
 # Set the default CMD for the image
-CMD ["/usr/libexec/s2i/usage"]
+#CMD ["/usr/libexec/s2i/usage"]
+CMD ["usage"]
