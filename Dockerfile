@@ -65,7 +65,7 @@ RUN chown -R 1001 /opt/app-root && \
 
 # Ensure container runs as non-root user
 
-WORKDIR ${HOME}
+#WORKDIR ${HOME}
 
 USER 1001
 
