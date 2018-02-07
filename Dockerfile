@@ -35,7 +35,8 @@ RUN mkdir -p ${HOME} && \
 ENV PORT=8080
 
 RUN mkdir -p /opt/app-root/src/html && \
-    mkdir -p ${HOME}/etc/nginx.conf.d ${HOME}/run 
+    mkdir -p ${HOME}/etc/nginx.conf.d && \
+    mkdir -p ${HOME}/run
 
 COPY ./etc/ ${HOME}/etc/
 
@@ -43,9 +44,10 @@ RUN cp /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/defau
     chown -R 1001:1001 $HOME
 
 #RUN  chmod -R 777 /var/log/nginx /var/cache/nginx/ /var/run \
-RUN  chmod -R 777 /var/log/nginx /var/run \
+RUN  chmod -R 777 /var/log/nginx /var/run ${HOME}/run && \
+     chmod 777 ${HOME}/etc ${HOME}/etc/nginx.conf.d && \
      #&& chmod 644 /etc/nginx/* \
-     && chmod 755 /etc/nginx/conf.d 
+     chmod 755 /etc/nginx/conf.d 
      #&& chmod 644 /etc/nginx/conf.d/default.conf
 
 # Set the default port for applications built using this image
@@ -54,8 +56,8 @@ EXPOSE 8080
 COPY ./s2i /usr/libexec/s2i
 
 # Copy the s2i builder scripts into place
-COPY s2i ${HOME}/s2i
-COPY run ${HOME}/run
+COPY ./s2i ${HOME}/s2i
+COPY ./run ${HOME}/run
 
 # TODO: Set labels used in OpenShift to describe the builder image
 LABEL io.k8s.description="Platform for building nginx" \
