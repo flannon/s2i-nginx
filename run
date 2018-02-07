@@ -5,7 +5,4 @@
 set -eo pipefail
 
 #exec nginx -DFOREGROUND
-#exec nginx -g "daemon off;" 
-exec nginx -g "daemon off;" -c /opt/app-root/etc/nginx.conf
-echo $(pwd)
-echo "This is the run script"
+exec nginx -c /opt/app-root/etc/nginx.conf
