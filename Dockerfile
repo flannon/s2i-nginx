@@ -9,7 +9,7 @@ ENV NGINX_VERSION=1.2.12
 
 # Install required packages here:
 RUN yum install -y epel-release && \
-    PACKAGES="nginx" && \
+    PACKAGES="nginx gd gperftools-libs libXpm libunwind nginx-all-modules nginx-filesystem nginx-mod-http-geoip nginx-mod-http-image-filter nginx-mod-http-perl nginx-mod-http-xslt-filter nginx-mod-mail nginx-mod-stream openssl openssl-devel openssl-libs" && \
     yum install -y --setopt=tsflags=nodocs ${PACKAGES} && \
     rpm -V ${PACKAGES} && \
     yum clean all -y
