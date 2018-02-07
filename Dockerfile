@@ -53,7 +53,7 @@ COPY ./s2i ${HOME}/s2i
 COPY ./run ${HOME}/run
 
 #RUN  chmod -R 777 /var/log/nginx /var/cache/nginx/ /var/run \
-RUN  chmod -R 777 /var/log/nginx /var/run ${HOME}/run && \
+RUN  chmod -R 777 /var/log /var/run ${HOME}/run && \
      chmod 777 ${HOME}/etc ${HOME}/etc/nginx.conf.d && \
      #&& chmod 644 /etc/nginx/* \
      chmod 755 /etc/nginx/conf.d && \
@@ -92,4 +92,5 @@ USER 1001
 
 # Set the default CMD for the image
 #CMD ["/usr/libexec/s2i/usage"]
+#CMD [ "/opt/app-root/run" ]
 CMD ["/opt/app-root/run"]

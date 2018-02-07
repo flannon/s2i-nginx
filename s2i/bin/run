@@ -9,12 +9,19 @@
 
 #exec /usr/sbin/nginx -g "daemon off;"
 
-echo "Running app on port 8080..."
+#echo "Running app on port 8080..."
+#
+#set -eo pipefail
+#
+#echo "In s2i"
+#echo $(pwd)
 
-set -eo pipefail
-
-echo "In s2i"
-echo $(pwd)
 #exec ${HOME}/run
 
 #exec /usr/sbin/nginx -g "daemon off;"
+
+
+#!/bin/bash -e
+cat <<EOF
+This is the modified usage statment running in place of the run script.
+EOF
