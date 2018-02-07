@@ -35,8 +35,7 @@ RUN mkdir -p ${HOME} && \
 ENV PORT=8080
 
 RUN mkdir -p /opt/app-root/src/html && \
-    mkdir -p ${HOME}/etc/nginx.conf.d && \
-    mkdir -p ${HOME}/run
+    mkdir -p ${HOME}/etc/nginx.conf.d 
 
 COPY ./etc/ ${HOME}/etc/
 
