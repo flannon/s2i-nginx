@@ -21,7 +21,6 @@
 #exec /usr/sbin/nginx -g "daemon off;"
 
 
-#!/bin/bash -e
-cat <<EOF
-This is the modified usage statment running in place of the run script.
-EOF
+set -eo pipefail
+
+exec ${HOME}/run
