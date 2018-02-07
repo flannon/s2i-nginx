@@ -47,7 +47,6 @@ RUN cp /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/defau
 # Set the default port for applications built using this image
 EXPOSE 8080
 
-COPY ./s2i /usr/libexec/s2i
 
 # Copy the s2i builder scripts into place
 COPY ./s2i ${HOME}/s2i
@@ -59,7 +58,8 @@ RUN  chmod -R 777 /var/log/nginx /var/run ${HOME}/run && \
      #&& chmod 644 /etc/nginx/* \
      chmod 755 /etc/nginx/conf.d && \
      chmod 755 ${HOME}/s2i/bin && \
-     chmod -R 777 /opt/
+     chmod -R 777 /opt/ && \
+     chmod -R 777 /sbin /usr/sbin
      #&& chmod 644 /etc/nginx/conf.d/default.conf
 
 # TODO: Set labels used in OpenShift to describe the builder image
@@ -77,6 +77,7 @@ LABEL io.k8s.description="Platform for building nginx" \
 #Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image
 # sets io.openshift.s2i.scripts-url label that way, or update that label
 #COPY ./s2i/bin/ /usr/libexec/s2i
+COPY ./s2i /usr/libexec/s2i
 
 #Drop the root user and make the content of /opt/app-root owned by user 1001
 #RUN chown -R 1001:1001 /opt/app-root && \
