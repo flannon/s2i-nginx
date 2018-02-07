@@ -51,6 +51,8 @@ RUN  chmod -R 777 /var/log/nginx /var/run \
 # Set the default port for applications built using this image
 EXPOSE 8080
 
+COPY ./s2i /usr/libexec/s2i
+
 # Copy the s2i builder scripts into place
 COPY s2i ${HOME}/s2i
 COPY run ${HOME}/run
