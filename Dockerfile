@@ -83,5 +83,5 @@ WORKDIR ${HOME}
 USER 1001
 
 # Set the default CMD for the image
-#CMD ["/usr/libexec/s2i/usage"]
-CMD ["/opt/app-root/run"]
+CMD ["/usr/libexec/s2i/usage"]
+#CMD ["/opt/app-root/run"]
