@@ -4,3 +4,4 @@
 
 #exec nginx -DFOREGROUND
 #exec nginx -g "daemon off;"
+echo "This is the run script"
