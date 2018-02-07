@@ -57,7 +57,8 @@ COPY ./run ${HOME}/run
 RUN  chmod -R 777 /var/log/nginx /var/run ${HOME}/run && \
      chmod 777 ${HOME}/etc ${HOME}/etc/nginx.conf.d && \
      #&& chmod 644 /etc/nginx/* \
-     chmod 755 /etc/nginx/conf.d 
+     chmod 755 /etc/nginx/conf.d && \
+     chmod 755 ${HOME}/s2i/bin
      #&& chmod 644 /etc/nginx/conf.d/default.conf
 
 # TODO: Set labels used in OpenShift to describe the builder image
