@@ -52,7 +52,7 @@ COPY ./s2i ${HOME}/s2i
 COPY ./run ${HOME}/run
 
 #RUN  chmod -R 777 /var/log/nginx /var/cache/nginx/ /var/run \
-RUN  cmod -R 777 /var/lib/nginx && \
+RUN  chmod -R 777 /var/lib/nginx && \
      chmod -R 777 /var/log /var/run ${HOME}/run && \
      chmod 777 ${HOME}/etc ${HOME}/etc/nginx.conf.d && \
      #&& chmod 644 /etc/nginx/* \
