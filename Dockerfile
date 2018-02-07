@@ -9,7 +9,8 @@ ENV NGINX_VERSION=1.2.12
 
 # Install required packages here:
 RUN yum install -y epel-release && \
-    PACKAGES="nginx gd gperftools-libs libXpm libunwind nginx-all-modules nginx-filesystem nginx-mod-http-geoip nginx-mod-http-image-filter nginx-mod-http-perl nginx-mod-http-xslt-filter nginx-mod-mail nginx-mod-stream openssl openssl-devel openssl-libs" && \
+    #PACKAGES="nginx gd gperftools-libs libXpm libunwind nginx-all-modules nginx-filesystem nginx-mod-http-geoip nginx-mod-http-image-filter nginx-mod-http-perl nginx-mod-http-xslt-filter nginx-mod-mail nginx-mod-stream openssl openssl-devel openssl-libs" && \
+    PACKAGES="nginx-${NGINX_VERSION}"
     yum install -y --setopt=tsflags=nodocs ${PACKAGES} && \
     rpm -V ${PACKAGES} && \
     yum clean all -y
@@ -32,8 +33,18 @@ RUN mkdir -p ${HOME} && \
 
 ENV PORT=8080
 
-COPY nginx.conf ${HOME}/nginx.conf
-COPY nginx.server.sample.conf ${HOME}/nginx.server.sample.conf
+RUN mkdir -p /opt/app-root/src/html && \
+    mkdir -p ${HOME}/etc/nginx.conf.d ${HOME}/run 
+
+COPY ./etc/ ${HOME}/etc/
+
+RUN cp /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/default.conf && \
+    chown -R 1001:1001 $HOME
+
+RUN  chmod -R 777 /var/log/nginx /var/cache/nginx/ /var/run \
+     #&& chmod 644 /etc/nginx/* \
+     && chmod 755 /etc/nginx/conf.d 
+     #&& chmod 644 /etc/nginx/conf.d/default.conf
 
 # Set the default port for applications built using this image
 EXPOSE 8080
