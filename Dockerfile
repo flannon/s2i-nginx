@@ -92,6 +92,6 @@ USER 1001
 
 # Set the default CMD for the image
 #CMD ["/usr/libexec/s2i/usage"]
-CMD ["/usr/libexec/s2i/run"]
+CMD ["/usr/libexec/s2i/bin/run"]
 #CMD [ "/opt/app-root/run" ]
 #CMD ["/opt/app-root/run"]
