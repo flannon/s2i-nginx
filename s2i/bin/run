@@ -9,9 +9,10 @@
 
 #exec /usr/sbin/nginx -g "daemon off;"
 
-#set -eo pipefail
-#
-#exec ${HOME}/run
 echo "Running app on port 8080..."
 
-exec /usr/sbin/nginx -g "daemon off;"
+set -eo pipefail
+
+exec ${HOME}/run
+
+#exec /usr/sbin/nginx -g "daemon off;"

@@ -2,6 +2,9 @@
 
 # Ensure that nginx runs with PID 1 and in the foreground
 
+set -eo pipefail
+
 #exec nginx -DFOREGROUND
-#exec nginx -g "daemon off;"
+#exec nginx -g "daemon off;" 
+#exec nginx -g "daemon off;" -c "/opt/app-root/etc/nginx.conf;"
 echo "This is the run script"
