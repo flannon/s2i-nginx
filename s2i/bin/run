@@ -13,6 +13,8 @@ echo "Running app on port 8080..."
 
 set -eo pipefail
 
-exec ${HOME}/run
+echo "In s2i"
+echo $(pwd)
+#exec ${HOME}/run
 
 #exec /usr/sbin/nginx -g "daemon off;"
