@@ -60,12 +60,12 @@ LABEL io.k8s.description="Platform for building nginx" \
 
 #Drop the root user and make the content of /opt/app-root owned by user 1001
 #RUN chown -R 1001:1001 /opt/app-root && \
-RUN chown -R 1001 /opt/app-root && \
+RUN chown -R 1001:0 /opt/app-root && \
     find ${HOME} -type d -exec chmod g+ws {} \;
 
 # Ensure container runs as non-root user
 
-#WORKDIR ${HOME}
+WORKDIR ${HOME}
 
 USER 1001
 
