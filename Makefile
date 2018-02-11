@@ -1,5 +1,6 @@
 
-IMAGE_NAME = centos/centos7
+#IMAGE_NAME = centos/centos7
+IMAGE_NAME = flannon/s2i-nginx
 
 .PHONY: build
 build:
