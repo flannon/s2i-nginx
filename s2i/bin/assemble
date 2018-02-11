@@ -13,6 +13,7 @@ echo "Copying source file"
 
 rm -rf /tmp/src/.git
 rm -rf /tmp/src/.s2i
+rm -f /tmp/src/README.md
 
 # If the 'centos/centos7' assemble script is executed with 
 # the '-h' flag, print the usage.
@@ -27,15 +28,15 @@ if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   mv /tmp/artifacts/. ./
 fi
 
-echo "---> Installing application source..."
-cp -Rf /tmp/src/. /opt/app-root/html
-
 echo "---> Building application from source..."
 #Add build steps for your application, eg npm install, bundle install, pip install, etc.
 #if [[ -f /tmp/src/nginx.conf ]]; then
 #  #mv /tmp/src/nginx.conf /etc/nginx/nginx.conf
 #  cp -f /tmp/src/nginx.conf /etc/nginx/nginx.conf
 #fi
+
+echo "---> Installing application source..."
+cp -Rf /tmp/src/. /opt/app-root/html
 
 #if [[ "$(ls -A /tmp/src)"]]; then
 #  #mv /tmp/src/* /usr/share/nginx/html/
