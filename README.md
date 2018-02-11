@@ -34,6 +34,11 @@ In order to access the application you'll need to open it's service port,
 
      oc expose svc/static-site
 
-Once you've exposed the port you can check the project folder in the OpenShift console to get URL of the static site.  I assume there must be a way of getting this info from the CLI but I haven't figured it out yet.
+Once you've exposed the port you can run
+
+     oc status
+     
+to get the URL of the static site, or check the project folder in the OpenShift console.  
+
 
 
