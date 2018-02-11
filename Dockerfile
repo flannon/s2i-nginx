@@ -1,7 +1,7 @@
 # centos/centos7
-#FROM openshift/base-centos7
+FROM openshift/base-centos7
 #FROM centos/s2i-base-centos7
-FROM centos:centos7 
+#FROM centos:centos7 
 
 MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
 
@@ -34,11 +34,12 @@ RUN mkdir -p ${HOME} && \
 
 ENV PORT=8080
 
-RUN mkdir -p /opt/app-root/src/html && \
+RUN mkdir -p ${HOME}/html && \
+    #mkdir -p /opt/app-root/src/html && \
     mkdir -p ${HOME}/etc/nginx.conf.d 
 
 COPY ./etc/ ${HOME}/etc/
-COPY ./src/ ${HOME}/src/
+#COPY ./src/ ${HOME}/src/
 
 RUN cp /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/default.conf && \
     chown -R 1001:1001 $HOME
