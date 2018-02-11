@@ -28,7 +28,7 @@ The application image combines the builder image with the applications source co
 will tart a container from the builder image; inject the contents of source repository into the build container according to the instructions  in the assemble script; make the application image from the current state of the builder container; and finally start the application container, which presents all the resources assembled during the build processes. 
 
 
-#### Making the applicaiton available
+#### Making the application available
 
 In order to access the application you'll need to open it's service port,
 
