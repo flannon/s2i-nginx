@@ -1,82 +1,39 @@
 
-# Creating a basic S2I builder image  
+## Creating a basic S2I builder image and application container 
 
-## Getting started  
+This repository, along with https://github.com/flannon/static-site, implements an example showing the full cycle of s2i deployment.  To run the static site you can do the following,
 
-### Files and Directories  
-| File                   | Required? | Description                                                  |
-|------------------------|-----------|--------------------------------------------------------------|
-| Dockerfile             | Yes       | Defines the base builder image                               |
-| s2i/bin/assemble       | Yes       | Script that builds the application                           |
-| s2i/bin/usage          | No        | Script that prints the usage of the builder                  |
-| s2i/bin/run            | Yes       | Script that runs the application                             |
-| s2i/bin/save-artifacts | No        | Script for incremental builds that saves the built artifacts |
-| test/run               | No        | Test script for the builder image                            |
-| test/test-app          | Yes       | Test application source code                                 |
+     make
+     oc new-app flannon/s2i-nginx~https://github.com/flannon/static-site --name mysite
+     oc expose svc/static-site
 
-#### Dockerfile
-Create a *Dockerfile* that installs all of the necessary tools and libraries that are needed to build and run our application.  This file will also handle copying the s2i scripts into the created image.
 
-#### S2I scripts
+#### Getting started
 
-##### assemble
-Create an *assemble* script that will build our application, e.g.:
-- build python modules
-- bundle install ruby gems
-- setup application specific configuration
+This assumes you have a version of OpenShift greater than 3.6 running and that you've logged in.
 
-The script can also specify a way to restore any saved artifacts from the previous image.   
 
-##### run
-Create a *run* script that will start the application. 
+#### Makefile
 
-##### save-artifacts (optional)
-Create a *save-artifacts* script which allows a new build to reuse content from a previous version of the application image.
+Running `make` will create the builder image called flannon/s2i-nginx and deploy it to the OpenShift docker registry.  When make finishes you can check the builder image,
 
-##### usage (optional) 
-Create a *usage* script that will print out instructions on how to use the image.
+    docker images | grep flannon/s2i-nginx
 
-##### Make the scripts executable 
-Make sure that all of the scripts are executable by running *chmod +x s2i/bin/**
 
-#### Create the builder image
-The following command will create a builder image named centos/centos7 based on the Dockerfile that was created previously.
-```
-docker build -t centos/centos7 .
-```
-The builder image can also be created by using the *make* command since a *Makefile* is included.
+#### Building the application image
+The application image combines the builder image with the applications source code, which, in this case, is the static website at https://github.com/flannon/static-site.git. Running new-app against the builder image with the source repository
 
-Once the image has finished building, the command *s2i usage centos/centos7* will print out the help info that was defined in the *usage* script.
+     oc new-app flannon/s2i-nginx~https://github.com/flannon/static-site --name mysite
 
-#### Testing the builder image
-The builder image can be tested using the following commands:
-```
-docker build -t centos/centos7-candidate .
-IMAGE_NAME=centos/centos7-candidate test/run
-```
-The builder image can also be tested by using the *make test* command since a *Makefile* is included.
+will tart a container from the builder image; inject the contents of source repository into the build container according to the instructions  in the assemble script; make the application image from the current state of the builder container; and finally start the application container, which presents all the resources assembled during the build processes. 
 
-#### Creating the application image
-The application image combines the builder image with your applications source code, which is served using whatever application is installed via the *Dockerfile*, compiled using the *assemble* script, and run using the *run* script.
-The following command will create the application image:
-```
-s2i build test/test-app centos/centos7 centos/centos7-app
----> Building and installing application from source...
-```
-Using the logic defined in the *assemble* script, s2i will now create an application image using the builder image as a base and including the source code from the test/test-app directory. 
 
-#### Running the application image
-Running the application image is as simple as invoking the docker run command:
-```
-docker run -d -p 8080:8080 centos/centos7-app
-```
-The application, which consists of a simple static web page, should now be accessible at  [http://localhost:8080](http://localhost:8080).
+#### Making the applicaiton available
 
-#### Using the saved artifacts script
-Rebuilding the application using the saved artifacts can be accomplished using the following command:
-```
-s2i build --incremental=true test/test-app nginx-centos7 nginx-app
----> Restoring build artifacts...
----> Building and installing application from source...
-```
-This will run the *save-artifacts* script which includes the custom code to backup the currently running application source, rebuild the application image, and then re-deploy the previously saved source using the *assemble* script.
+In order to access the application you'll need to open it's service port,
+
+     oc expose svc/static-site
+
+Once you've exposed the port you can check the project folder in the OpenShift console to get URL of the static site.  I assume there must be a way of getting this info from the CLI but I haven't figured it out yet.
+
+
