@@ -28,9 +28,9 @@ RUN yum install -y epel-release && \
 
 ENV HOME=/opt/app-root
 
-RUN mkdir -p ${HOME} && \
-    useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
-            -c "Default Application User" default
+RUN mkdir -p ${HOME}  
+    #useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
+    #        -c "Default Application User" default
 
 ENV PORT=8080
 
