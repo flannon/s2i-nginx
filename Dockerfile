@@ -41,7 +41,7 @@ RUN mkdir -p ${HOME}/html && \
 COPY ./etc/ ${HOME}/etc/
 #COPY ./src/ ${HOME}/src/
 
-RUN cp /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/default.conf && \
+RUN mv -f /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/default.conf && \
     chown -R 1001:1001 $HOME
 
 
