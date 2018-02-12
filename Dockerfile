@@ -1,17 +1,16 @@
-# centos/centos7
-FROM openshift/base-centos7
 #FROM centos/s2i-base-centos7
 #FROM centos:centos7 
+FROM openshift/base-centos7
 
 MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
 
-ENV NGINX_VERSION=1.2.12
+ENV NGINX_VERSION=1:1.12.2-1
+ENV RELEASE=el7
 
 # Install required packages here:
-RUN yum install -y epel-release && \
-    #PACKAGES="nginx gd gperftools-libs libXpm libunwind nginx-all-modules nginx-filesystem nginx-mod-http-geoip nginx-mod-http-image-filter nginx-mod-http-perl nginx-mod-http-xslt-filter nginx-mod-mail nginx-mod-stream openssl openssl-devel openssl-libs" && \
-    #PACKAGES="nginx-${NGINX_VERSION}" && \
-    PACKAGES="nginx" && \
+RUN export ARCH=$(arch) && \
+    yum install -y epel-release --setopt=tsflags=nodocs && \
+    PACKAGES="nginx-${NGINX_VERSION}.${RELEASE}.${ARCH}" && \
     yum install -y --setopt=tsflags=nodocs ${PACKAGES} && \
     rpm -V ${PACKAGES} && \
     yum clean all -y
@@ -28,18 +27,17 @@ RUN yum install -y epel-release && \
 
 ENV HOME=/opt/app-root
 
-RUN mkdir -p ${HOME}  
-    #useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
-    #        -c "Default Application User" default
+RUN mkdir -p ${HOME} && \ 
+    [[ $(grep default /etc/passwd) ]] || \
+        useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin \
+        -c "Default Application User" default 
 
 ENV PORT=8080
 
 RUN mkdir -p ${HOME}/html && \
-    #mkdir -p /opt/app-root/src/html && \
     mkdir -p ${HOME}/etc/nginx.conf.d 
 
 COPY ./etc/ ${HOME}/etc/
-#COPY ./src/ ${HOME}/src/
 
 RUN mv -f /opt/app-root/etc/nginx.server.sample.conf ${HOME}/etc/nginx.conf.d/default.conf && \
     chown -R 1001:1001 $HOME
@@ -93,7 +91,4 @@ WORKDIR ${HOME}
 USER 1001
 
 # Set the default CMD for the image
-#CMD ["/usr/libexec/s2i/usage"]
 CMD ["/usr/libexec/s2i/bin/run"]
-#CMD [ "/opt/app-root/run" ]
-#CMD ["/opt/app-root/run"]
