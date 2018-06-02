@@ -4,7 +4,7 @@ FROM openshift/base-centos7
 
 MAINTAINER Flannon Jackson <flannon@flannon@nyu.edu>
 
-ENV NGINX_VERSION=1:1.12.2-1
+ENV NGINX_VERSION=1:1.12.2-2
 ENV RELEASE=el7
 
 # Install required packages here:
