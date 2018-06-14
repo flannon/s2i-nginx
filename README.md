@@ -3,7 +3,7 @@
 
   Log in to OpenShift
 
-    oc lgoin -u developer -p developer
+    oc login -u developer -p developer
 
   Log in to the minishift registry
 
@@ -23,7 +23,7 @@ This repository, along with https://github.com/flannon/static-site, implements a
 
      make
      oc new-app flannon/s2i-nginx~https://github.com/flannon/static-site --name mysite
-     oc expose svc/static-site
+     oc expose svc/mysite
 
 
 #### Getting started
