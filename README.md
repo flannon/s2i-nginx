@@ -1,11 +1,29 @@
 
+## Load iamges to the local registry
+
+  Log in to OpenShift
+
+    oc login -u developer -p developer
+
+  Log in to the minishift registry
+
+    docker login -u developer -p $(oc whoami -t) $(minishift openshift registry)
+
+  Log in to docker hub (hub.docker.com)
+
+    docker login
+
+  Pull the base image to the local registry
+
+    docker pull openshift/base-centos7
+
 ## Creating a basic S2I builder image and application container 
 
 This repository, along with https://github.com/flannon/static-site, implements an example showing the full cycle of s2i deployment.  To run the static site you can do the following,
 
      make
      oc new-app flannon/s2i-nginx~https://github.com/flannon/static-site --name mysite
-     oc expose svc/static-site
+     oc expose svc/mysite
 
 
 #### Getting started
