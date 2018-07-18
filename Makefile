@@ -1,4 +1,6 @@
 
+#IMAGE_NAME = flannon/s2i-nginx
+#IMAGE_NAME = nginx-server
 IMAGE_NAME = flannon/s2i-nginx
 
 .PHONY: build
