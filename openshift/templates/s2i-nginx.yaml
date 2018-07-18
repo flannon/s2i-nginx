@@ -35,6 +35,12 @@ objects:
       triggers:
         - type: ConfigChange
         - type: ImageChange
+        - github:
+            secret: kM1YYZVoswSxC2f6om6ZDRoffDYw2vc96CCklI/gHCA=
+          type: GitHub 
+        - generic:
+            secret: kM1YYZVoswSxC2f6om6ZDRoffDYw2vc96CCklI/gHCA=
+          type: Generic  
       source:
         type: Git
         git:
@@ -115,7 +121,7 @@ objects:
 parameters:
   - name: APPLICATION_NAME
     description: The name of the application.
-    value: s2i-nginx
+    value: static-site
     from: '[a-zA-Z0-9]{10}'
     required: true
   - name: SOURCE_REPOSITORY
