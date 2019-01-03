@@ -1,11 +1,11 @@
 
-## Load iamges to the local registry
+## Load images to the local registry
 
   Log in to OpenShift
 
     oc login -u developer -p developer
 
-  Log in to the minishift registry
+  Log in to the minishift registry. If you get an error, do this: https://docs.okd.io/latest/minishift/using/docker-daemon.html
 
     docker login -u developer -p $(oc whoami -t) $(minishift openshift registry)
 
